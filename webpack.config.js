@@ -77,7 +77,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       filename: "index.html",
-      // favicon: "./src/favicon.ico", // No favicon
+      favicon: "./src/favicon.png", // No favicon
       template: "src/index.html",
     }),
   ],
