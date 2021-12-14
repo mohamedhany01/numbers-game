@@ -22,8 +22,4 @@ const mapToOperation = (operation) => {
   }
 };
 
-const noAccessAllowed = () => {
-    return "⛔ No access is allowed.";
-}
-
-export { mapToEmoji, mapToOperation, noAccessAllowed };
+export { mapToEmoji, mapToOperation };

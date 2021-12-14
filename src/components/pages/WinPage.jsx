@@ -2,8 +2,15 @@
 import { useNavigate } from "react-router";
 
 // Utilities functions
-import { mapRoute } from "../../js/utilities/routes";
-import { noAccessAllowed } from "../../js/utilities/interaction";
+import { initializeTimer } from "../../js/utilities/timer";
+import { setTries } from "../../js/utilities/constraints";
+import { mapRoute } from "../../js/utilities/routesManager";
+import {
+  initializeTwoNumbers,
+  setQuestionsNumber,
+} from "../../js/utilities/randomGen";
+
+import NoAccessAllowed from "../NoAccessAllowed";
 
 function WinPage({ appState, setAppState }) {
   // State destruction
@@ -11,7 +18,7 @@ function WinPage({ appState, setAppState }) {
 
   // Protect the route
   if (gameLevel === "none" || gameOperation === "none") {
-    return <div>{noAccessAllowed()}</div>;
+    return <NoAccessAllowed/>;
   }
 
   let navigator = useNavigate();
@@ -31,13 +38,51 @@ function WinPage({ appState, setAppState }) {
     });
     navigator(mapRoute("index"));
   };
+
+  // Reset and back to the same challenge again
+  const doChallengeAgain = () => {
+    const level = gameLevel;
+    const questionsNumber = setQuestionsNumber(level);
+    const [n1, n2] = initializeTwoNumbers(level);
+    const time = initializeTimer(level);
+    const triesCount = setTries(level);
+
+    setAppState({
+      ...appState,
+      gameQuestionsNumber: questionsNumber,
+      questionNumbersToSolve: 0,
+      num1: n1,
+      num2: n2,
+      countdownTime: time,
+      tries: triesCount,
+      solution: "",
+    });
+
+    navigator(mapRoute("play"));
+  };
+
   return (
-    <div>
-      <p>Congratulations, you won.</p>
-      <div>
-        <button title="Back to the settings page" onClick={backHome}>
-          Back Home
-        </button>
+    <div className="container text-center">
+      <div className="row my-3">
+        <h1 className="text-primary">Congratulations, you won.</h1>
+      </div>
+      <div className="row">
+        <div className="btns">
+          <button
+            className="btn btn-primary me-4"
+            title="Back to the settings page"
+            onClick={backHome}
+          >
+            Back Home
+          </button>
+          <button
+            className="btn btn-success ms-4"
+            title="Play again with the same level"
+            onClick={doChallengeAgain}
+          >
+            Play Again
+          </button>
+        </div>
       </div>
     </div>
   );

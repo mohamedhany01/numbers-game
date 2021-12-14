@@ -9,8 +9,11 @@ import {
 } from "../../js/utilities/validateSolution";
 import { initializeTwoNumbers } from "../../js/utilities/randomGen";
 import { initializeTimer, updateTimer } from "../../js/utilities/timer";
-import { mapRoute } from "../../js/utilities/routes";
-import { noAccessAllowed } from "../../js/utilities/interaction";
+import { mapRoute } from "../../js/utilities/routesManager";
+
+// SASS
+import "../../sass/components/_play.scss";
+import NoAccessAllowed from "../NoAccessAllowed";
 
 function PlayPage({ appState, setAppState }) {
   // State destruction
@@ -28,7 +31,7 @@ function PlayPage({ appState, setAppState }) {
 
   // Protect the route
   if (gameLevel === "none" || gameOperation === "none") {
-    return <div>{noAccessAllowed()}</div>;
+    return <NoAccessAllowed />;
   }
 
   let navigator = useNavigate();
@@ -98,36 +101,52 @@ function PlayPage({ appState, setAppState }) {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-12 col-sm-6">
-            <section>
+          <div className="col-12 m-auto">
+            <section className="mt-3">
               <header>
-                <h1>Let's play</h1>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum
-                  minima placeat vel autem ut doloremque.
-                </p>
+                <h1>Let's Do It</h1>
               </header>
               <main>
                 <form onSubmit={handelAnswerOnSubmit}>
-                  <section className="info">
-                    <div>Game level: {gameLevel}</div>
-                    <div>You have: {tries} tries</div>
-                    <div>
-                      To win you have to solve {questionNumbersToSolve}/
-                      {gameQuestionsNumber}
+                  <section className="info p-2 position-relative border border-2 rounded text-center">
+                    <div className="mt-3">
+                      Game level:{" "}
+                      <span className="fs-medium fw-00 text-capitalize">
+                        {gameLevel}
+                      </span>
                     </div>
-                    <div>You have {updateTimer(countdownTime)} left</div>
+                    <div className="tries my-3">
+                      You have:{" "}
+                      <span className="fs-medium fw-00">{tries} tries</span>
+                    </div>
+                    <div className="mb-3">
+                      You have solved {questionNumbersToSolve}/
+                      <span className="fs-medium fw-00">
+                        {gameQuestionsNumber}
+                      </span>
+                    </div>
+                    <div className="time-panel fs-medium p-2 text-center border border-2 rounded fw-500">
+                      {updateTimer(countdownTime)}
+                    </div>
                   </section>
-                  <div>{`${num1} ${gameOperation} ${num2}`}</div>
+                  <div className="question mt-3 p-2 d-flex justify-content-evenly align-items-center">
+                    <span className="number1 fw-500 fs-big">{num1}</span>{" "}
+                    <span className="operation fw-500 fs-big">
+                      {gameOperation}
+                    </span>{" "}
+                    <span className="number2 fw-500 fs-big">{num2}</span>
+                  </div>
                   <input
                     type="text"
                     name="solution"
                     value={solution}
+                    className="form-control my-3"
+                    placeholder="Your Answer"
                     onChange={(e) =>
                       setAppState({ ...appState, solution: e.target.value })
                     }
                   />
-                  <button className="btn">Submit</button>
+                  <button className="btn btn-primary w-100">Submit</button>
                 </form>
               </main>
             </section>

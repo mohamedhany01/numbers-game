@@ -1,0 +1,26 @@
+@use "../common";
+
+header {
+  .sub-header {
+    color: common.$whiteBlue;
+  }
+
+  .game-name {
+    color: common.$violet;
+  }
+
+  .rules {
+   color: common.$whiteBlue;
+  }
+}
+
+.form-settings {
+   color: common.$violet;
+}
+
+.selected-operation.active,
+.selected-level.active {
+  background-color: common.$white;
+  box-shadow: 0px 1px 7px -1px common.$black;
+  padding: 0rem 0.4rem;
+}

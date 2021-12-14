@@ -1,14 +1,16 @@
+// Hooks
 import { useNavigate } from "react-router";
+
+// Utilities functions
+import { initializeTimer } from "../../js/utilities/timer";
+import { setTries } from "../../js/utilities/constraints";
+import { mapRoute } from "../../js/utilities/routesManager";
 import {
   initializeTwoNumbers,
   setQuestionsNumber,
 } from "../../js/utilities/randomGen";
 
-// Utilities functions
-import { initializeTimer } from "../../js/utilities/timer";
-import { setTries } from "../../js/utilities/constraints";
-import { mapRoute } from "../../js/utilities/routes";
-import { noAccessAllowed } from "../../js/utilities/interaction";
+import NoAccessAllowed from "../NoAccessAllowed";
 
 function LosePage({ appState, setAppState }) {
   // State destruction
@@ -16,7 +18,7 @@ function LosePage({ appState, setAppState }) {
 
   // Protect the route
   if (gameLevel === "none" || gameOperation === "none") {
-    return <div>{noAccessAllowed()}</div>;
+    return <NoAccessAllowed />
   }
 
   let navigator = useNavigate();
@@ -59,18 +61,27 @@ function LosePage({ appState, setAppState }) {
     navigator(mapRoute("play"));
   };
   return (
-    <div>
-      <p>You lost</p>
-      <div>
-        <button
-          title="Try again with the same level"
-          onClick={doChallengeAgain}
-        >
-          Try Again
-        </button>
-        <button title="Back to the settings page" onClick={backHome}>
-          Back Home
-        </button>
+    <div className="container text-center">
+      <div className="row my-3">
+        <h1 className="text-danger">Unfortunately, you lost.</h1>
+      </div>
+      <div className="row">
+        <div className="btns">
+          <button
+            className="btn btn-primary me-4"
+            title="Back to the settings page"
+            onClick={backHome}
+          >
+            Back Home
+          </button>
+          <button
+            className="btn btn-success ms-4"
+            title="Play again with the same level"
+            onClick={doChallengeAgain}
+          >
+            Play Again
+          </button>
+        </div>
       </div>
     </div>
   );

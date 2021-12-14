@@ -4,6 +4,7 @@ const qNumbers = {
   hard: 30,
   insane: 40,
 };
+
 const setQuestionsNumber = (level) => {
   if (level === "easy") {
     return qNumbers[level];

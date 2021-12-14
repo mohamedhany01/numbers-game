@@ -1,21 +1,22 @@
+// Hooks
 import { useNavigate } from "react-router";
 
 // Utilities functions
-import { mapRoute } from "../../js/utilities/routesManager";
+import { mapRoute } from "../js/utilities/routesManager";
 
-function ErrorPage({ appState, setAppState }) {
+
+function NoAccessAllowed() {
+
   let navigator = useNavigate();
 
-  // Reset to default and back to index page
+  // Back to index page
   const backHome = () => {
     navigator(mapRoute("index"));
   };
-
   return (
     <div className="container text-center">
       <div className="row my-3">
-        <h1>🤔</h1>
-        <h1 className="text-warning">404 | Page Not Found</h1>
+        <h1 className="text-danger">⛔ No Access Is Allowed ⛔</h1>
       </div>
       <div className="row">
         <div className="btns">
@@ -32,4 +33,4 @@ function ErrorPage({ appState, setAppState }) {
   );
 }
 
-export default ErrorPage;
+export default NoAccessAllowed;

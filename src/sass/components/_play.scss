@@ -1,0 +1,70 @@
+@use "../common";
+
+header {
+  h1 {
+    color: common.$violet;
+  }
+}
+
+main {
+  .info {
+    background-color: common.$whiteBlue;
+    & > div {
+      color: common.$white;
+    }
+
+    & div > span {
+      color: common.$violetDark;
+    }
+
+    .tries {
+      &::after,
+      &::before {
+        content: "";
+        width: 25%;
+        height: 1px;
+        position: absolute;
+        left: 38%;
+        background-color: common.$violet;
+      }
+
+      &::before {
+        top: 63px;
+      }
+
+      &::after {
+        top: 107px;
+      }
+    }
+    .time-panel {
+      background-color: common.$whiteBlue;
+      border: 2px;
+
+      @media (min-width: 1200px) {
+        width: 7rem;
+        top: 7px;
+        left: -110px;
+        position: absolute;
+      }
+
+      @media (max-width: 1199px) {
+        //  TODO => mixin to reuse again
+        &::before {
+          content: "";
+          width: 25%;
+          height: 1px;
+          position: absolute;
+          top: 152px;
+          left: 38%;
+          background-color: common.$violet;
+        }
+      }
+    }
+  }
+
+  .question {
+    background-color: common.$white;
+    box-shadow: 0px 1px 7px -1px common.$black;
+    color: common.$violet;
+  }
+}
