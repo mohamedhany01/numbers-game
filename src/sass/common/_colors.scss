@@ -1,7 +1,15 @@
 $white: #fff;
 $lightWhite: #e8e8f2;
 $black: #000;
-$violet: #6459e3;
+$violet: hsl(245, 80%, 67%);
 $violetDark: hsl(245, 52%, 58%);
 $whiteBlue: #42ade2;
-$whiteBlueBright: hsl(200, 61%, 50%)
+$whiteBlueBright: hsl(200, 61%, 50%);
+
+.app-bg-primary {
+  background-color: $violetDark !important;
+}
+
+.app-bg-secondary {
+    background-color: $whiteBlueBright !important;
+}

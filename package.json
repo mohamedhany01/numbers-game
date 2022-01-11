@@ -1,5 +1,5 @@
 {
-  "name": "react-notes",
+  "name": "numbers-game",
   "scripts": {
     "start": "webpack serve --open",
     "watch": "webpack --watch",

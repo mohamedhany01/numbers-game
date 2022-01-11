@@ -1,0 +1,9 @@
+@use "../common";
+
+.primary-color {
+    color: common.$violet !important;
+}
+
+.secondary-color {
+    color: common.$whiteBlueBright !important;
+}

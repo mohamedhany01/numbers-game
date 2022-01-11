@@ -11,13 +11,14 @@ import { mapRoute } from "../../js/utilities/routesManager";
 import { mapToEmoji, mapToOperation } from "../../js/utilities/interaction";
 
 // Images
-import headerImg from "../../images/header-img.png";
+import gameRulesSVG from "../../images/undraw_annotation_re_h774_game_rules.svg";
 
 // 3rd party libraries
 import { useFormik } from "formik";
 
 // SASS
 import "../../sass/components/_start.scss";
+import AppHeader from "../app/AppHeader";
 
 // Formik state
 
@@ -93,110 +94,109 @@ function StartPage({ appState, setAppState }) {
 
   return (
     <>
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <section>
-              <header>
-                <h1 className="fw-700 text-center my-4">
-                  Welcome Player{" "}
-                  <div className="h2 mt-2 sub-header">Are You Ready?</div>
-                </h1>
-                <div className="d-flex justify-content-center align-items-center mb-3">
-                  <img src={headerImg} width={100} alt="logo" />
-                  <div className="game-name ms-4 h3 fw-500">
-                    The Numbers Game
+      <main className="container px-5 my-5">
+        <AppHeader />
+        <section className="game-rules my-5 px-1">
+          <section className="rules row justify-content-start align-items-center">
+            <section className="col-md-6 col-12 order-md-1 order-2 secondary-color">
+              <h2 className="primary-color">Game Rules</h2>
+              <p>Please read the rules of the game before continue.</p>
+              <ol>
+                <li>Select the math operation.</li>
+                <li>Select the game level.</li>
+                <li>Press start button to play.</li>
+              </ol>
+            </section>
+            <section className="col-md-6 col-12 order-md-2 order-1">
+              <figure>
+                <img
+                  src={gameRulesSVG}
+                  alt="Game rules"
+                  className="img-fluid"
+                />
+              </figure>
+            </section>
+          </section>
+        </section>
+        <section className="px-1">
+          <form
+            onSubmit={didAppStateFillCorrectly}
+            className="form-settings secondary-color"
+          >
+            <fieldset>
+              <legend>
+                <h2 className="primary-color">Game Settings</h2>
+              </legend>
+              <p>Some settings to set up, and then start the game</p>
+              <div className="from-row mt-3 w-100">
+                <label htmlFor="operation" className="form-label fw-500">
+                  Operation:
+                </label>
+                <div className="row">
+                  <div className="col-10">
+                    <select
+                      id="operation"
+                      value={gameOperation}
+                      onChange={handelSelection}
+                      name="gameOperation"
+                      className="form-control secondary-color"
+                    >
+                      {Object.values(operations).map((value, k) => (
+                        <option value={Object.keys(operations)[k]} key={k}>
+                          {value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="col-1 offset-1 d-flex justify-content-center align-items-center">
+                    <span
+                      className={`selected-operation fs-big ${
+                        gameOperation !== "none" ? "active" : ""
+                      }`}
+                    >
+                      {gameOperation !== "none"
+                        ? mapToOperation(gameOperation)
+                        : ""}
+                    </span>
                   </div>
                 </div>
-                <div className="rules">
-                  <p>Please read the rules of the game before continue.</p>
-                  <ul>
-                    <li>Select the math operation you want.</li>
-                    <li>Select the level of the game.</li>
-                    <li>Press start button to play.</li>
-                  </ul>
+              </div>
+              <div className="from-row mt-3 w-100">
+                <label htmlFor="level" className="form-label fw-500">
+                  level:
+                </label>
+                <div className="row">
+                  <div className="col-10">
+                    <select
+                      id="level"
+                      value={gameLevel}
+                      onChange={handelSelection}
+                      name="gameLevel"
+                      className="form-control secondary-color"
+                    >
+                      {Object.values(levels).map((value, k) => (
+                        <option value={Object.keys(levels)[k]} key={k}>
+                          {value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="col-1 offset-1 d-flex justify-content-center align-items-center">
+                    <span
+                      className={`selected-level fs-big ${
+                        gameLevel !== "none" ? "active" : ""
+                      }`}
+                    >
+                      {gameLevel !== "none" ? mapToEmoji(gameLevel) : ""}
+                    </span>
+                  </div>
                 </div>
-              </header>
-              <main>
-                <form onSubmit={didAppStateFillCorrectly} className="form-settings">
-                  <fieldset>
-                    <legend>Game Settings</legend>
-                    <p>Some settings to set up, and then start the game</p>
-                    <div className="from-row mt-3 w-100">
-                      <label htmlFor="operation" className="form-label">
-                        Operation:
-                      </label>
-                      <div className="row">
-                        <div className="col-11">
-                          <select
-                            id="operation"
-                            value={gameOperation}
-                            onChange={handelSelection}
-                            name="gameOperation"
-                            className="form-control"
-                          >
-                            {Object.values(operations).map((value, k) => (
-                              <option
-                                value={Object.keys(operations)[k]}
-                                key={k}
-                              >
-                                {value}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="col-1 d-flex justify-content-center align-items-center">
-                          <span
-                            className={`selected-operation fs-big ${
-                              gameOperation !== "none" ? "active" : ""
-                            }`}
-                          >
-                            {gameOperation !== "none"
-                              ? mapToOperation(gameOperation)
-                              : ""}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="from-row mt-3 w-100">
-                      <label htmlFor="level" className="form-label">
-                        level:
-                      </label>
-                      <div className="row">
-                        <div className="col-11">
-                          <select
-                            id="level"
-                            value={gameLevel}
-                            onChange={handelSelection}
-                            name="gameLevel"
-                            className="form-control"
-                          >
-                            {Object.values(levels).map((value, k) => (
-                              <option value={Object.keys(levels)[k]} key={k}>
-                                {value}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="col-1 d-flex justify-content-center align-items-center">
-                          <span
-                            className={`selected-level fs-big ${
-                              gameLevel !== "none" ? "active" : ""
-                            }`}
-                          >
-                            {gameLevel !== "none" ? mapToEmoji(gameLevel) : ""}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </fieldset>
-                  <button className="btn btn-primary mt-3 w-100">Start</button>
-                </form>
-              </main>
-            </section>
-          </div>
-        </div>
-      </div>
+              </div>
+            </fieldset>
+            <button className="app-btn-primary w-20 mt-3 p-3 fw-500">Start</button>
+          </form>
+        </section>
+      </main>
     </>
   );
 }

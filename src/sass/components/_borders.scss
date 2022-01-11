@@ -1,0 +1,24 @@
+@use "../common";
+
+.app-border-secondary {
+//   animation: name duration timing-function delay iteration-count direction fill-mode;
+  animation: border-animation ease-in 1s infinite;
+}
+
+@keyframes border-animation {
+  0% {
+    border: 2px solid common.$whiteBlue;
+  }
+  25% {
+    border: 4px solid common.$whiteBlueBright;
+  }
+  50% {
+    border: 8px solid common.$whiteBlueBright;
+  }
+  75% {
+    border: 12px solid common.$whiteBlueBright;
+  }
+  100% {
+    border: 16px solid common.$whiteBlue;
+  }
+}

@@ -13,7 +13,10 @@ import { mapRoute } from "../../js/utilities/routesManager";
 
 // SASS
 import "../../sass/components/_play.scss";
+
+// Companents
 import NoAccessAllowed from "../NoAccessAllowed";
+import AppHeader from "../app/AppHeader";
 
 function PlayPage({ appState, setAppState }) {
   // State destruction
@@ -54,7 +57,9 @@ function PlayPage({ appState, setAppState }) {
   const handelAnswerOnSubmit = (e) => {
     // Stop submission
     e.preventDefault();
+  };
 
+  const handelSolution = () => {
     // Only move to the next question in case of the solution is valid and correct
     // Else decrease the tries
     if (
@@ -83,6 +88,10 @@ function PlayPage({ appState, setAppState }) {
     }
   };
 
+  const resetField = () => {
+    setAppState({ ...appState, solution: "" });
+  };
+
   // losing's constraints
   if (tries <= 0 || countdownTime <= 0) {
     navigator(mapRoute("lose"));
@@ -98,62 +107,84 @@ function PlayPage({ appState, setAppState }) {
   }
 
   return (
-    <>
-      <div className="container">
+    <main className="container px-5 my-5 overflow-hidden">
+      <AppHeader />
+      <section className="app-question px-1 my-5">
         <div className="row">
-          <div className="col-12 m-auto">
-            <section className="mt-3">
-              <header>
-                <h1>Let's Do It</h1>
+          <section className="question bg-box-shadow position-relative col-12 col-md-6 rounded my-4 my-md-0 py-4">
+            <form onSubmit={handelAnswerOnSubmit}>
+              <header className="position-absolute top-0 start-50 translate-middle app-bg-primary p-4 rounded-circle text-white app-border-secondary">
+                <div className="time-circle">{updateTimer(countdownTime)}</div>
               </header>
-              <main>
-                <form onSubmit={handelAnswerOnSubmit}>
-                  <section className="info p-2 position-relative border border-2 rounded text-center">
-                    <div className="mt-3">
-                      Game level:{" "}
-                      <span className="fs-medium fw-00 text-capitalize">
-                        {gameLevel}
-                      </span>
-                    </div>
-                    <div className="tries my-3">
-                      You have:{" "}
-                      <span className="fs-medium fw-00">{tries} tries</span>
-                    </div>
-                    <div className="mb-3">
-                      You have solved {questionNumbersToSolve}/
-                      <span className="fs-medium fw-00">
-                        {gameQuestionsNumber}
-                      </span>
-                    </div>
-                    <div className="time-panel fs-medium p-2 text-center border border-2 rounded fw-500">
-                      {updateTimer(countdownTime)}
-                    </div>
-                  </section>
-                  <div className="question mt-3 p-2 d-flex justify-content-evenly align-items-center">
-                    <span className="number1 fw-500 fs-big">{num1}</span>{" "}
-                    <span className="operation fw-500 fs-big">
-                      {gameOperation}
-                    </span>{" "}
-                    <span className="number2 fw-500 fs-big">{num2}</span>
-                  </div>
+              <div className="question-statement col-12 mt-4">
+                <h2 className="h5">
+                  Question #{questionNumbersToSolve}/{gameQuestionsNumber}
+                </h2>
+              </div>
+              <div className="col-12 text-center mt-4">
+                <span className="number1 fw-500 fs-big">{num1}</span>
+                <span className="operation fw-500 fs-big">{gameOperation}</span>
+                <span className="number2 fw-500 fs-big">{num2}</span>
+              </div>
+              <div className="question-answer col-12 px-5 my-5">
+                <div className="input-group">
                   <input
+                    autoFocus
+                    inputMode="numeric"
                     type="text"
                     name="solution"
                     value={solution}
-                    className="form-control my-3"
+                    className="form-control form-control app-primary-color"
                     placeholder="Your Answer"
                     onChange={(e) =>
                       setAppState({ ...appState, solution: e.target.value })
                     }
                   />
-                  <button className="btn btn-primary w-100">Submit</button>
-                </form>
-              </main>
-            </section>
-          </div>
+                  <span className="input-group-text app-bg-primary text-white fw-500">
+                    Tries: {tries}
+                  </span>
+                </div>
+              </div>
+              <section className="col-12">
+                <div className="row g-0">
+                  <div className="col-6 text-center">
+                    <button
+                      className="app-btn-primary w-50"
+                      onClick={handelSolution}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                  <div className="col-6 text-center">
+                    <button
+                      className="app-btn-secondary w-50"
+                      onClick={resetField}
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              </section>
+            </form>
+          </section>
+          <section className="more-info bg-box-shadow col-12 col-md-3 offset-md-3 rounded py-4">
+            <h2 className="h5">Level info</h2>
+            <div className="d-grid gap-3">
+              <p className="p-1 m-0 bg-light border-bottom text-capitalize">
+                Game level: <span className="ms-3 d-block">{gameLevel}</span>
+              </p>
+              <p className="p-1 m-0 bg-light border-bottom">
+                Available Tries: <span className="ms-3 d-block">{tries}</span>
+              </p>
+              <p className="p-1 m-0 bg-light border-bottom">
+                Questions Numbers:{" "}
+                <span className="ms-3 d-block">{gameQuestionsNumber}</span>
+              </p>
+            </div>
+          </section>
         </div>
-      </div>
-    </>
+      </section>
+    </main>
   );
 }
 
